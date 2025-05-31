@@ -1,0 +1,292 @@
+:root {
+    --primary-color: #3a5320;
+    --secondary-color: #f8a22f;
+    --accent-color: #e74c3c;
+    --text-color: #ffffff;
+    --button-color: #4a6b3d;
+    --button-hover: #5a8f4a;
+    --display-bg: #2d3a25;
+    --food-button: #5a8f4a;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --button-gap: 6px;
+    --button-border: 4px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c3e50, #4a6b3d);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 360px;
+}
+
+h1 {
+    margin-bottom: 25px;
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    letter-spacing: 0.5px;
+}
+
+.calculator {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100%;
+    background-color: var(--primary-color);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calculator:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.display {
+    height: 120px;
+    overflow-y: auto;
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: right;
+    padding: 15px;
+    font-size: 1.5em;
+    line-height: 1.4;
+    background-color: var(--display-bg);
+    color: #fff;
+    font-weight: 400;
+    scrollbar-width: thin;
+    scrollbar-color: var(--button-hover) var(--display-bg);
+    /* Pemisah elegan */
+    position: relative;
+    border-radius: 15px 15px 0 0;
+    margin-bottom: 12px;
+    box-shadow: inset 0 -10px 15px -10px rgba(0,0,0,0.2);
+}
+
+.display::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent);
+}
+
+
+.display::-webkit-scrollbar {
+    width: 8px;
+}
+
+.display::-webkit-scrollbar-track {
+    background: var(--display-bg);
+}
+
+.display::-webkit-scrollbar-thumb {
+    background-color: var(--button-hover);
+    border-radius: 4px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--button-gap);
+    padding: 12px;
+    background-color: var(--primary-color);
+}
+
+button {
+    height: 80px;
+    font-size: 1.2em;
+    border: none;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px;
+    position: relative;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: 12px;
+    /* Efek 3D */
+    box-shadow: 0 var(--button-border) 0 0 rgba(0,0,0,0.2),
+                0 calc(var(--button-border) + 2px) 8px rgba(0,0,0,0.1);
+    transform: translateY(0);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+button:active {
+    transform: translateY(var(--button-border));
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    background-color: var(--button-hover);
+    z-index: 2;
+    transform: translateY(-2px);
+    box-shadow: 0 calc(var(--button-border) + 2px) 0 0 rgba(0,0,0,0.2),
+                0 calc(var(--button-border) + 6px) 12px rgba(0,0,0,0.15);
+}
+
+.number {
+    background-color: #3a5320;
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+.number:hover {
+    background-color: #4a6b3d;
+}
+
+button[data-value] {
+    background-color: var(--food-button);
+    font-size: 0.95em;
+}
+
+button[data-value]:hover {
+    background-color: #6ba856;
+    transform: translateY(-2px);
+}
+
+.food-img {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease;
+}
+
+button:hover .food-img {
+    transform: scale(1.1);
+}
+
+.food-price {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.operator {
+    background-color: var(--secondary-color);
+    box-shadow: 0 var(--button-border) 0 0 #d18a27;
+}
+
+.operator:hover {
+    background-color: #ffb347;
+    box-shadow: 0 calc(var(--button-border) + 2px) 0 0 #d18a27;
+}
+
+.equals {
+    background-color: var(--accent-color);
+    box-shadow: 0 var(--button-border) 0 0 #c0392b;
+}
+
+.equals:hover {
+    background-color: #c0392b;
+    box-shadow: 0 calc(var(--button-border) + 2px) 0 0 #a33226;
+}
+
+.clear {
+    background-color: #5d6d7e;
+    font-size: 1.2em;
+}
+
+.clear:hover {
+    background-color: #6d7e8f;
+}
+
+.backspace {
+    background-color: #5d6d7e;
+    font-size: 1.3em;
+}
+
+.backspace:hover {
+    background-color: #6d7e8f;
+}
+
+/* Efek khusus untuk tombol yang ditekan */
+button:active {
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Responsive design */
+@media (max-width: 400px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    
+    .calculator {
+        border-radius: 15px;
+    }
+    
+    .display {
+        height: 120px;
+        padding: 15px;
+        font-size: 1.4em;
+    }
+    
+    button {
+        height: 75px;
+        font-size: 1.1em;
+    }
+    
+    .food-img {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+    :root {
+        --button-gap: 4px;
+        --button-border: 3px;
+    }
+    
+    .buttons {
+        padding: 8px;
+    }
+    
+    button {
+        height: 70px;
+        border-radius: 10px;
+    }
+    
+    .display {
+        height: 120px;
+        padding: 15px;
+    }
+}
