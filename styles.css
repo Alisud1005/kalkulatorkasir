@@ -121,11 +121,12 @@ body {
 .buttons {
     flex: 1;
     display: grid;
-    gap: var(--gap);
+    gap: 4px;
     padding: 8px;
     overflow: hidden;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     grid-auto-rows: minmax(0, 1fr);
+    grid-auto-flow: dense;
 }
 
 /* Tombol Dasar */
@@ -148,16 +149,33 @@ button {
 }
 
 /* Adjust ukuran tombol */
-button[data-value] {
+/* button[data-value] {
     position: relative;
-    padding: 8px 5px !important;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 8px 3px !important;
+    min-height: 90px; 
+    overflow: visible;
+}  */
+
+.number {
+  grid-row: auto;
+  grid-column: auto;
+}
+
+.operator, .clear, .backspace {
+  grid-row: auto;
+  grid-column: auto;
 }
 
 /* Tombol Khusus */
 .number { background: #52722f; }
 button[data-value] { background: var(--food-btn); }
 .operator { background: var(--secondary); color: #333; }
+
+
 .equals { 
     background: var(--accent);
     grid-column: span 2;
@@ -195,32 +213,48 @@ button:hover {
     text-overflow: ellipsis;
     max-width: 100%;
     padding: 0 3px;
+    word-break: break-word; /* Tambahkan ini */
+    white-space: normal; /* Tambahkan ini */
 }
 
 /* Efek hover untuk gambar */
 button[data-value]:hover .food-img {
-    transform: scale(1.1);
+    transform: scale(1.08);
+    transition: transform 0.2s ease;
+}
+
+button[data-value]:hover .food-name {
+    overflow: visible;
+    white-space: normal;
+    height: auto;
+    max-height: none;
+    background: rgba(0,0,0,0.7);
+    border-radius: 4px;
+    padding: 2px;
 }
 
 .food-price {
     position: absolute;
-    top: 5px;
-    left: 0.1px;
-    background: rgba(0, 0, 0, 0.7);
+    top: 2px;
+    left: 2px;
+    background: rgba(0, 0, 0, 0.8);
     color: var(--secondary) !important;
-    padding: 2px 6px;
+    padding: 1px 5px;
     border-radius: 10px;
-    font-size: 0.65rem !important;
+    font-size: 0.68rem !important;
     font-weight: bold;
+    z-index: 2;
 }
 
 button[data-value] {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px 5px !important;
-    gap: 6px;
+    padding: 8px 5px !important;
+    gap: 4px;
+    overflow: hidden;
 }
 
 /* Efek hover */
@@ -294,6 +328,32 @@ button[data-value]:hover .food-price {
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
+.menu-section:first-child {
+    order: 1;
+}
+
+
+.menu-section:nth-child(2) {
+    order: 3;
+}
+
+.menu-section:nth-child(3) {
+    order: 2;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 15px;
+}.menu-section:nth-child(2) {
+    order: 3;
+}
+
+.menu-section:nth-child(3) {
+    order: 2;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 15px;
+}
+
+
 /* Menu Items */
 .menu-item {
     width: 100%;
@@ -340,10 +400,19 @@ button[data-value]:hover .food-price {
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    color: var(--secondary);
+    margin-bottom: 8px;
     font-size: 0.9rem;
 }
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--secondary);
+    background: rgba(255,255,255,0.1);
+    color: var(--text);
+}
+
 
 .form-group select {
     width: 100%;
@@ -455,18 +524,14 @@ button[data-value]:hover .food-price {
 
 /* Untuk layar kecil */
 @media (max-width: 400px) {
-    .sidebar-menu {
-        width: 280px;
+    .food-img {
+        width: 36px;
+        height: 36px;
     }
     
     .food-price {
         font-size: 0.6rem !important;
         padding: 1px 4px;
-    }
-    
-    .food-img {
-        width: 36px;
-        height: 36px;
     }
 }
 
@@ -478,4 +543,170 @@ button[data-value]:hover .food-price {
 * {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+
+.add-food-btn {
+    background-color: var(--secondary) !important;
+    color: #333 !important;
+    grid-column: span 2; /* Lebar 2 kolom */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-food-btn:hover {
+    background-color: #f8b22f !important;
+}
+
+/* Modal tambah makanan */
+.food-modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+#food-price {
+    -moz-appearance: textfield; /* Firefox */
+}v
+
+#food-name, #food-price, #food-image {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    background: rgba(255,255,255,0.1) !important;
+    color: white !important;
+    border: 1px solid var(--secondary) !important;
+    padding: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 4px;
+    caret-color: var(--secondary); /* Warna kursor */
+    -webkit-touch-callout: text !important;
+}
+
+#food-name:focus, #food-price:focus, #food-image:focus {
+    outline: none;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+
+/* Hilangkan panah pada input number */
+#food-price::-webkit-outer-spin-button,
+#food-price::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#food-name::placeholder,
+#food-price::placeholder,
+#food-image::placeholder {
+    color: rgba(255,255,255,0.5) !important;
+    opacity: 1;
+}
+
+
+.modal-content {
+    background-color: var(--display-bg);
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal-content h3 {
+    color: var(--secondary);
+    margin-bottom: 15px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    min-height: auto;
+    box-shadow: none;
+}
+
+.modal-actions button:active {
+    transform: none;
+}
+
+#cancel-food {
+    background: rgba(255,255,255,0.1);
+}
+
+#save-food {
+    background: var(--secondary);
+    color: #333;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(255,255,255,0.5) !important;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(255,255,255,0.5) !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(255,255,255,0.5) !important;
+}
+
+
+/* Tambahkan di bagian akhir file CSS */
+.delete-mode {
+  position: relative;
+  animation: shake 0.5s infinite;
+  border: 2px solid var(--accent) !important;
+}
+
+.delete-mode::after {
+  content: "×";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  z-index: 1;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.delete-mode .food-img {
+  filter: grayscale(50%) brightness(0.7);
+}
+
+.delete-mode:hover {
+  filter: brightness(0.8) !important;
 }
