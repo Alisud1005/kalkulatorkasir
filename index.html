@@ -1,149 +1,223 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kalkulator harga makanan dengan gambar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Kalkulator harga makanan dengan gambar" />
     <title>Kalkulator Harga Makanan</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="calculator">
-            <!-- Display -->
-            <div class="display" id="result">
-                <div class="calculation-area"></div>
-                <div class="food-items-area"></div>
-            </div>
-
-            <!-- Combined Sidebar Menu -->
-            <div class="sidebar-menu">
-                <div class="menu-header">
-                    <h3>Menu</h3>
-                    <button id="close-menu">&times;</button>
-                </div>
-                <div class="menu-content">
-                    <!-- Excel Report Section -->
-                    <div class="menu-section">
-                        <h4>Laporan Excel</h4>
-                        <button id="export-history" class="menu-item">
-                            <i class="fas fa-file-excel"></i> Cetak Laporan
-                        </button>
-                        <div class="form-group">
-                            <label for="report-month">Bulan:</label>
-                            <select id="report-month">
-                                <option value="1">Januari</option>
-                                <option value="2">Februari</option>
-                                <option value="3">Maret</option>
-                                <option value="4">April</option>
-                                <option value="5">Mei</option>
-                                <option value="6">Juni</option>
-                                <option value="7">Juli</option>
-                                <option value="8">Agustus</option>
-                                <option value="9">September</option>
-                                <option value="10">Oktober</option>
-                                <option value="11">November</option>
-                                <option value="12">Desember</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="report-year">Tahun:</label>
-                            <select id="report-year"></select>
-                        </div>
-                    </div>
-                    
-                    <!-- History Section -->
-                    <div class="menu-section">
-                        <h4>Riwayat Perhitungan</h4>
-                        <button id="clear-history" class="menu-item">
-                            <i class="fas fa-trash"></i> Hapus Riwayat
-                        </button>
-                        <div class="history-content" id="history-list"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Buttons Grid -->
-            <div class="buttons">
-                <!-- Food Buttons -->
-                <button data-value="10000" aria-label="Jus Alpukat Rp 10.000">
-                    <img src="images/alpukat.jpg" alt="Jus Alpukat" class="food-img">
-                    <span class="food-price">Rp 10k</span>
-                    <span class="food-name">Pokat</span>
-                </button>
-                <button data-value="7000" aria-label="Cappucino Rp 7.000">
-                    <img src="images/capuccino.jpg" alt="Cappucino" class="food-img">
-                    <span class="food-price">Rp 7k</span>
-                    <span class="food-name">Cappucino</span>
-                </button>
-                <button data-value="10000" aria-label="Jus Jeruk Rp 10.000">
-                    <img src="images/jusjeruk.jpg" alt="Jus Jeruk" class="food-img">
-                    <span class="food-price">Rp 10k</span>
-                    <span class="food-name">Jeruk</span>
-                </button>
-                <button data-value="5000" aria-label="Teh Panas Rp 5.000">
-                    <img src="images/teh.jpg" alt="Teh Panas" class="food-img">
-                    <span class="food-price">Rp 5k</span>
-                    <span class="food-name">Teh Manis</span>
-                </button>
-                <button data-value="7000" aria-label="Manis Dingin Rp 7.000">
-                    <img src="images/tehmanis.jpg" alt="Manis Dingin" class="food-img">
-                    <span class="food-price">Rp 7k</span>
-                    <span class="food-name">Manis Dingin</span>
-                </button>
-                <button data-value="3000" aria-label="Kopi Pahit Rp 3.000">
-                    <img src="images/kopipahit.JPG" alt="Kopi Pahit" class="food-img">
-                    <span class="food-price">Rp 3k</span>
-                    <span class="food-name">Kopi Pahit</span>
-                </button>
-                <button data-value="5000" aria-label="Kopi Manis Rp 5.000">
-                    <img src="images/kopipahit.JPG" alt="Kopi Manis" class="food-img">
-                    <span class="food-price">Rp 5k</span>
-                    <span class="food-name">Kopi Manis</span>
-                </button>
-                <button data-value="5000" aria-label="Kopi Jahe Rp 5.000">
-                    <img src="images/kopijahe.jpg" alt="Kopi Jahe" class="food-img">
-                    <span class="food-price">Rp 5k</span>
-                    <span class="food-name">Jahe</span>
-                </button>
-                <button data-value="5000" aria-label="Kopi ABC Rp 5.000">
-                    <img src="images/kopiabc.jpg" alt="Kopi ABC" class="food-img">
-                    <span class="food-price">Rp 5k</span>
-                    <span class="food-name">Kopi ABC</span>
-                </button>
-                <button data-value="10000" aria-label="Uang Mandi Rp 10.000">
-                    <img src="images/mandi.jpg" alt="Uang Mandi" class="food-img">
-                    <span class="food-price">Rp 10k</span>
-                    <span class="food-name">Mandi</span>
-                </button>
-
-                <!-- Number Buttons -->
-                <button class="number">1</button>
-                <button class="number">2</button>
-                <button class="number">3</button>
-                <button class="number">4</button>
-                <button class="number">5</button>
-                <button class="number">6</button>
-                <button class="number">7</button>
-                <button class="number">8</button>
-                <button class="number">9</button>
-                <button class="number">0</button>
-
-                <!-- Operator Buttons -->
-                <button class="operator" id="add" aria-label="Tambah">+</button>
-                <button class="operator" id="multiply" aria-label="Kali">×</button>
-                <button id="backspace" class="backspace" aria-label="Hapus satu karakter">⌫</button>
-                <button id="equals" class="equals" aria-label="Hitung">=</button>
-                <button id="clear" class="clear" aria-label="Hapus">C</button>
-            </div>
+      <div class="calculator">
+        <!-- Display -->
+        <div class="display" id="result">
+          <div class="calculation-area"></div>
+          <div class="food-items-area"></div>
         </div>
+
+        <!-- Combined Sidebar Menu -->
+        <div class="sidebar-menu">
+          <div class="menu-header">
+            <h3>Menu</h3>
+            <button id="close-menu">&times;</button>
+          </div>
+          <div class="menu-content">
+            <!-- Di dalam div menu-content, tambahkan section baru -->
+            <div class="menu-section">
+                <h4>Kelola Makanan</h4>
+                <button id="add-food-btn" class="menu-item">
+                <i class="fas fa-plus-circle"></i> Tambah Makanan Baru
+                </button>
+                <button id="delete-food-btn" class="menu-item">
+                    <i class="fas fa-trash"></i> Hapus Makanan
+                </button>
+            </div>
+
+            <!-- Excel Report Section -->
+            <div class="menu-section">
+              <h4>Laporan Excel</h4>
+              <button id="export-history" class="menu-item">
+                <i class="fas fa-file-excel"></i> Cetak Laporan
+              </button>
+              <div class="form-group">
+                <label for="report-month">Bulan:</label>
+                <select id="report-month">
+                  <option value="1">Januari</option>
+                  <option value="2">Februari</option>
+                  <option value="3">Maret</option>
+                  <option value="4">April</option>
+                  <option value="5">Mei</option>
+                  <option value="6">Juni</option>
+                  <option value="7">Juli</option>
+                  <option value="8">Agustus</option>
+                  <option value="9">September</option>
+                  <option value="10">Oktober</option>
+                  <option value="11">November</option>
+                  <option value="12">Desember</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="report-year">Tahun:</label>
+                <select id="report-year"></select>
+              </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="menu-section">
+              <h4>Riwayat Perhitungan</h4>
+              <button id="clear-history" class="menu-item">
+                <i class="fas fa-trash"></i> Hapus Riwayat
+              </button>
+              <div class="history-content" id="history-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons Grid -->
+        <div class="buttons">
+          <!-- Food Buttons -->
+          <button data-value="10000" aria-label="Jus Alpukat Rp 10.000">
+            <img src="images/alpukat.jpg" alt="Jus Alpukat" class="food-img" />
+            <span class="food-price">Rp 10k</span>
+            <span class="food-name">Pokat</span>
+          </button>
+          <button data-value="7000" aria-label="Cappucino Rp 7.000">
+            <img src="images/capuccino.jpg" alt="Cappucino" class="food-img" />
+            <span class="food-price">Rp 7k</span>
+            <span class="food-name">Cappucino</span>
+          </button>
+          <button data-value="10000" aria-label="Jus Jeruk Rp 10.000">
+            <img src="images/jusjeruk.jpg" alt="Jus Jeruk" class="food-img" />
+            <span class="food-price">Rp 10k</span>
+            <span class="food-name">Jeruk</span>
+          </button>
+          <button data-value="5000" aria-label="Teh Panas Rp 5.000">
+            <img src="images/teh.jpg" alt="Teh Panas" class="food-img" />
+            <span class="food-price">Rp 5k</span>
+            <span class="food-name">Teh Manis</span>
+          </button>
+          <button data-value="7000" aria-label="Manis Dingin Rp 7.000">
+            <img
+              src="images/tehmanis.jpg"
+              alt="Manis Dingin"
+              class="food-img"
+            />
+            <span class="food-price">Rp 7k</span>
+            <span class="food-name">Manis Dingin</span>
+          </button>
+          <button data-value="3000" aria-label="Kopi Pahit Rp 3.000">
+            <img src="images/kopipahit.JPG" alt="Kopi Pahit" class="food-img" />
+            <span class="food-price">Rp 3k</span>
+            <span class="food-name">Kopi Pahit</span>
+          </button>
+          <button data-value="5000" aria-label="Kopi Manis Rp 5.000">
+            <img src="images/kopipahit.JPG" alt="Kopi Manis" class="food-img" />
+            <span class="food-price">Rp 5k</span>
+            <span class="food-name">Kopi Manis</span>
+          </button>
+          <button data-value="5000" aria-label="Kopi Jahe Rp 5.000">
+            <img src="images/kopijahe.jpg" alt="Kopi Jahe" class="food-img" />
+            <span class="food-price">Rp 5k</span>
+            <span class="food-name">Jahe</span>
+          </button>
+          <button data-value="5000" aria-label="Kopi ABC Rp 5.000">
+            <img src="images/kopiabc.jpg" alt="Kopi ABC" class="food-img" />
+            <span class="food-price">Rp 5k</span>
+            <span class="food-name">Kopi ABC</span>
+          </button>
+          <button data-value="10000" aria-label="Uang Mandi Rp 10.000">
+            <img src="images/mandi.jpg" alt="Uang Mandi" class="food-img" />
+            <span class="food-price">Rp 10k</span>
+            <span class="food-name">Mandi</span>
+          </button>
+
+          <!-- Number Buttons -->
+          <button class="number">1</button>
+          <button class="number">2</button>
+          <button class="number">3</button>
+          <button class="number">4</button>
+          <button class="number">5</button>
+          <button class="number">6</button>
+          <button class="number">7</button>
+          <button class="number">8</button>
+          <button class="number">9</button>
+          <button class="number">0</button>
+
+          <!-- Operator Buttons -->
+          <button class="operator" id="add" aria-label="Tambah">+</button>
+          <button class="operator" id="multiply" aria-label="Kali">×</button>
+          <button
+            id="backspace"
+            class="backspace"
+            aria-label="Hapus satu karakter"
+          >
+            ⌫
+          </button>
+          <button id="equals" class="equals" aria-label="Hitung">=</button>
+          <button id="clear" class="clear" aria-label="Hapus">C</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="food-modal" class="food-modal">
+      <div class="modal-content">
+        <h3>Tambah Makanan Baru</h3>
+        <div class="form-group">
+          <label for="food-name">Nama Makanan/Minuman</label>
+          <input type="text" id="food-name" placeholder="Contoh: Es Teh" />
+        </div>
+        <div class="form-group">
+          <label for="food-price">Harga (Rp)</label>
+          <input type="number" id="food-price" placeholder="Contoh: 5000" />
+        </div>
+        <div class="form-group">
+            <label for="food-image">Pilih Gambar</label>
+            <input type="file" id="food-image" accept="image/*" />
+        </div>
+        <div class="modal-actions">
+          <button id="cancel-food" class="menu-item">Batal</button>
+          <button id="save-food" class="generate-btn">Simpan</button>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+    <script>
+      // Tambahkan event listener untuk tombol backspace di dalam modal
+      document.addEventListener("DOMContentLoaded", function () {
+        const foodNameInput = document.getElementById("food-name");
+        const foodPriceInput = document.getElementById("food-price");
+        const foodImageInput = document.getElementById("food-image");
+
+        // Izinkan semua tombol termasuk backspace untuk input nama dan gambar
+        [foodNameInput, foodImageInput].forEach((input) => {
+          input.addEventListener("keydown", function (e) {
+            if (e.key === "Backspace") {
+              // Biarkan backspace bekerja normal
+              return true;
+            }
+          });
+        });
+
+        // Untuk input harga, izinkan angka dan tombol kontrol termasuk backspace
+        foodPriceInput.addEventListener("keydown", function (e) {
+          if (!/[0-9]|Backspace|ArrowLeft|ArrowRight|Delete|Tab/.test(e.key)) {
+            e.preventDefault();
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
