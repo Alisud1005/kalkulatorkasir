@@ -444,14 +444,71 @@ button[data-value]:hover .food-price {
 }
 
 .history-item {
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(255,255,255,0.1);
-    cursor: pointer;
-    font-size: 0.8rem;
+  background: rgba(58, 83, 32, 0.3);
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-left: 4px solid var(--secondary);
 }
 
 .history-item:hover {
-    background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.1);
+  transform: translateX(2px);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.history-time {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+}
+
+.history-items {
+  color: var(--text);
+  background: rgba(248, 162, 47, 0.1);
+  padding: 8px;
+  border-radius: 4px;
+  margin: 5px 0;
+  word-break: break-word;
+}
+
+.history-items i {
+  color: var(--secondary);
+  margin-right: 5px;
+}
+
+.history-total {
+  font-weight: bold;
+  font-size: 1.05rem;
+  margin: 8px 0;
+  color: #f8a22f;
+}
+
+.history-total i {
+  color: #f8a22f;
+  margin-right: 5px;
+}
+
+.history-expression {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  font-family: monospace;
+  word-break: break-all;
+  background: rgba(0,0,0,0.2);
+  padding: 6px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.history-expression i {
+  color: rgba(255,255,255,0.6);
+  margin-right: 5px;
 }
 
 .history-item div:first-child {
